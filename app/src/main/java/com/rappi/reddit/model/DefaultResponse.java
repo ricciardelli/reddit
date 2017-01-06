@@ -22,15 +22,15 @@ package com.rappi.reddit.model;
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Response {
+public class DefaultResponse {
 
     private String kind;
     private Data data;
 
-    public Response() {
+    public DefaultResponse() {
     }
 
-    public Response(String kind, Data data) {
+    public DefaultResponse(String kind, Data data) {
         this.kind = kind;
         this.data = data;
     }
@@ -53,7 +53,7 @@ public class Response {
 
     @Override
     public String toString() {
-        return "Response{" +
+        return "DefaultResponse{" +
                 "kind='" + kind + '\'' +
                 ", data=" + data +
                 '}';
