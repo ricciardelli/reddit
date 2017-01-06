@@ -20,12 +20,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Base class for reddit data.
+ * Base class for reddit categories data.
  *
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Reddit {
+public class Category {
 
     private String bannerImg;
     private boolean userSrThemeEnabled;
@@ -73,10 +73,10 @@ public class Reddit {
     private String submissionType;
     private String userIsSubscriber;
 
-    public Reddit() {
+    public Category() {
     }
 
-    public Reddit(String bannerImg, boolean userSrThemeEnabled, String submitTextHtml, String userIsBanned, boolean wikiEnabled, boolean showMedia, String id, String submitText, String displayName, String headerImg, String descriptionHtml, String title, boolean collapseDeletedComments, boolean over18, String publicDescriptionHtml, boolean spoilersEnabled, List<Integer> iconSize, String suggestedCommentSort, String iconImg) {
+    public Category(String bannerImg, boolean userSrThemeEnabled, String submitTextHtml, String userIsBanned, boolean wikiEnabled, boolean showMedia, String id, String submitText, String displayName, String headerImg, String descriptionHtml, String title, boolean collapseDeletedComments, boolean over18, String publicDescriptionHtml, boolean spoilersEnabled, List<Integer> iconSize, String suggestedCommentSort, String iconImg, String headerTitle, String description, String userIsMuted, String submitLinkLabel, String accountsActive, boolean publicTraffic, List<Integer> headerSize, long subscribers, String submitTextLabel, String lang, String userIsModerator, String keyColor, String name, Date created, String url, boolean quarantine, boolean hideAds, Date createdUtc, List<Integer> bannerSize, String userIsContributor, String publicDescription, boolean showMediaPreview, int commentScoreHideMins, String subredditType, String submissionType, String userIsSubscriber) {
         this.bannerImg = bannerImg;
         this.userSrThemeEnabled = userSrThemeEnabled;
         this.submitTextHtml = submitTextHtml;
@@ -96,6 +96,32 @@ public class Reddit {
         this.iconSize = iconSize;
         this.suggestedCommentSort = suggestedCommentSort;
         this.iconImg = iconImg;
+        this.headerTitle = headerTitle;
+        this.description = description;
+        this.userIsMuted = userIsMuted;
+        this.submitLinkLabel = submitLinkLabel;
+        this.accountsActive = accountsActive;
+        this.publicTraffic = publicTraffic;
+        this.headerSize = headerSize;
+        this.subscribers = subscribers;
+        this.submitTextLabel = submitTextLabel;
+        this.lang = lang;
+        this.userIsModerator = userIsModerator;
+        this.keyColor = keyColor;
+        this.name = name;
+        this.created = created;
+        this.url = url;
+        this.quarantine = quarantine;
+        this.hideAds = hideAds;
+        this.createdUtc = createdUtc;
+        this.bannerSize = bannerSize;
+        this.userIsContributor = userIsContributor;
+        this.publicDescription = publicDescription;
+        this.showMediaPreview = showMediaPreview;
+        this.commentScoreHideMins = commentScoreHideMins;
+        this.subredditType = subredditType;
+        this.submissionType = submissionType;
+        this.userIsSubscriber = userIsSubscriber;
     }
 
     public String getBannerImg() {
@@ -226,9 +252,241 @@ public class Reddit {
         this.spoilersEnabled = spoilersEnabled;
     }
 
+    public List<Integer> getIconSize() {
+        return iconSize;
+    }
+
+    public void setIconSize(List<Integer> iconSize) {
+        this.iconSize = iconSize;
+    }
+
+    public String getSuggestedCommentSort() {
+        return suggestedCommentSort;
+    }
+
+    public void setSuggestedCommentSort(String suggestedCommentSort) {
+        this.suggestedCommentSort = suggestedCommentSort;
+    }
+
+    public String getIconImg() {
+        return iconImg;
+    }
+
+    public void setIconImg(String iconImg) {
+        this.iconImg = iconImg;
+    }
+
+    public String getHeaderTitle() {
+        return headerTitle;
+    }
+
+    public void setHeaderTitle(String headerTitle) {
+        this.headerTitle = headerTitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUserIsMuted() {
+        return userIsMuted;
+    }
+
+    public void setUserIsMuted(String userIsMuted) {
+        this.userIsMuted = userIsMuted;
+    }
+
+    public String getSubmitLinkLabel() {
+        return submitLinkLabel;
+    }
+
+    public void setSubmitLinkLabel(String submitLinkLabel) {
+        this.submitLinkLabel = submitLinkLabel;
+    }
+
+    public String getAccountsActive() {
+        return accountsActive;
+    }
+
+    public void setAccountsActive(String accountsActive) {
+        this.accountsActive = accountsActive;
+    }
+
+    public boolean isPublicTraffic() {
+        return publicTraffic;
+    }
+
+    public void setPublicTraffic(boolean publicTraffic) {
+        this.publicTraffic = publicTraffic;
+    }
+
+    public List<Integer> getHeaderSize() {
+        return headerSize;
+    }
+
+    public void setHeaderSize(List<Integer> headerSize) {
+        this.headerSize = headerSize;
+    }
+
+    public long getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(long subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public String getSubmitTextLabel() {
+        return submitTextLabel;
+    }
+
+    public void setSubmitTextLabel(String submitTextLabel) {
+        this.submitTextLabel = submitTextLabel;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    public String getUserIsModerator() {
+        return userIsModerator;
+    }
+
+    public void setUserIsModerator(String userIsModerator) {
+        this.userIsModerator = userIsModerator;
+    }
+
+    public String getKeyColor() {
+        return keyColor;
+    }
+
+    public void setKeyColor(String keyColor) {
+        this.keyColor = keyColor;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public boolean isQuarantine() {
+        return quarantine;
+    }
+
+    public void setQuarantine(boolean quarantine) {
+        this.quarantine = quarantine;
+    }
+
+    public boolean isHideAds() {
+        return hideAds;
+    }
+
+    public void setHideAds(boolean hideAds) {
+        this.hideAds = hideAds;
+    }
+
+    public Date getCreatedUtc() {
+        return createdUtc;
+    }
+
+    public void setCreatedUtc(Date createdUtc) {
+        this.createdUtc = createdUtc;
+    }
+
+    public List<Integer> getBannerSize() {
+        return bannerSize;
+    }
+
+    public void setBannerSize(List<Integer> bannerSize) {
+        this.bannerSize = bannerSize;
+    }
+
+    public String getUserIsContributor() {
+        return userIsContributor;
+    }
+
+    public void setUserIsContributor(String userIsContributor) {
+        this.userIsContributor = userIsContributor;
+    }
+
+    public String getPublicDescription() {
+        return publicDescription;
+    }
+
+    public void setPublicDescription(String publicDescription) {
+        this.publicDescription = publicDescription;
+    }
+
+    public boolean isShowMediaPreview() {
+        return showMediaPreview;
+    }
+
+    public void setShowMediaPreview(boolean showMediaPreview) {
+        this.showMediaPreview = showMediaPreview;
+    }
+
+    public int getCommentScoreHideMins() {
+        return commentScoreHideMins;
+    }
+
+    public void setCommentScoreHideMins(int commentScoreHideMins) {
+        this.commentScoreHideMins = commentScoreHideMins;
+    }
+
+    public String getSubredditType() {
+        return subredditType;
+    }
+
+    public void setSubredditType(String subredditType) {
+        this.subredditType = subredditType;
+    }
+
+    public String getSubmissionType() {
+        return submissionType;
+    }
+
+    public void setSubmissionType(String submissionType) {
+        this.submissionType = submissionType;
+    }
+
+    public String getUserIsSubscriber() {
+        return userIsSubscriber;
+    }
+
+    public void setUserIsSubscriber(String userIsSubscriber) {
+        this.userIsSubscriber = userIsSubscriber;
+    }
+
     @Override
     public String toString() {
-        return "Reddit{" +
+        return "Category{" +
                 "bannerImg='" + bannerImg + '\'' +
                 ", userSrThemeEnabled=" + userSrThemeEnabled +
                 ", submitTextHtml='" + submitTextHtml + '\'' +

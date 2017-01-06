@@ -22,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 
 /**
- * Reddit service interface.
+ * Category service interface.
  *
  * @author Richard Ricciardelli
  * @version 1.0
@@ -30,6 +30,6 @@ import retrofit2.http.GET;
 public interface RedditService {
 
     @GET("reddits.json")
-    Call<DefaultResponse> reddits();
+    Call<DefaultResponse> categories();
 
 }
