@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Base class for reddit data.
+ * Base class for reddit categories data.
  *
  * @author Richard Ricciardelli
  * @version 1.0

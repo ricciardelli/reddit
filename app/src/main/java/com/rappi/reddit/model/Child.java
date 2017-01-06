@@ -25,12 +25,12 @@ package com.rappi.reddit.model;
 public class Child {
 
     private String kind;
-    private Reddit data;
+    private Category data;
 
     public Child() {
     }
 
-    public Child(String kind, Reddit data) {
+    public Child(String kind, Category data) {
         this.kind = kind;
         this.data = data;
     }
@@ -43,11 +43,11 @@ public class Child {
         this.kind = kind;
     }
 
-    public Reddit getData() {
+    public Category getData() {
         return data;
     }
 
-    public void setData(Reddit data) {
+    public void setData(Category data) {
         this.data = data;
     }
 

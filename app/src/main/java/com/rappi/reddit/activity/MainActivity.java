@@ -65,7 +65,7 @@ public class MainActivity extends ParentActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Service.getInstance().getService().reddits().enqueue(this);
+        Service.getInstance().getService().categories().enqueue(this);
     }
 
     @Override
