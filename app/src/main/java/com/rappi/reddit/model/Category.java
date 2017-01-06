@@ -25,7 +25,7 @@ import java.util.List;
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Reddit {
+public class Category {
 
     private String bannerImg;
     private boolean userSrThemeEnabled;
@@ -73,10 +73,10 @@ public class Reddit {
     private String submissionType;
     private String userIsSubscriber;
 
-    public Reddit() {
+    public Category() {
     }
 
-    public Reddit(String bannerImg, boolean userSrThemeEnabled, String submitTextHtml, String userIsBanned, boolean wikiEnabled, boolean showMedia, String id, String submitText, String displayName, String headerImg, String descriptionHtml, String title, boolean collapseDeletedComments, boolean over18, String publicDescriptionHtml, boolean spoilersEnabled, List<Integer> iconSize, String suggestedCommentSort, String iconImg) {
+    public Category(String bannerImg, boolean userSrThemeEnabled, String submitTextHtml, String userIsBanned, boolean wikiEnabled, boolean showMedia, String id, String submitText, String displayName, String headerImg, String descriptionHtml, String title, boolean collapseDeletedComments, boolean over18, String publicDescriptionHtml, boolean spoilersEnabled, List<Integer> iconSize, String suggestedCommentSort, String iconImg) {
         this.bannerImg = bannerImg;
         this.userSrThemeEnabled = userSrThemeEnabled;
         this.submitTextHtml = submitTextHtml;
@@ -228,7 +228,7 @@ public class Reddit {
 
     @Override
     public String toString() {
-        return "Reddit{" +
+        return "Category{" +
                 "bannerImg='" + bannerImg + '\'' +
                 ", userSrThemeEnabled=" + userSrThemeEnabled +
                 ", submitTextHtml='" + submitTextHtml + '\'' +
