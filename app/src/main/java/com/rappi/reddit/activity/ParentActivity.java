@@ -16,7 +16,10 @@
 
 package com.rappi.reddit.activity;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Base class to define common code shared over depending activities.
@@ -27,4 +30,12 @@ import android.support.v7.app.AppCompatActivity;
 public class ParentActivity extends AppCompatActivity {
 
     protected String LOG_TAG = getClass().getSimpleName();
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // Forward results to EasyPermissions
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
 }
