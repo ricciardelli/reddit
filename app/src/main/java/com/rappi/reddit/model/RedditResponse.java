@@ -17,45 +17,14 @@
 package com.rappi.reddit.model;
 
 /**
- * Base class used to define children on response.
+ * Custom response which change data type to handle {@link Reddit} data.
  *
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Child<T> {
+public class RedditResponse extends DefaultResponse<Data<Child<Reddit>>> {
 
-    private String kind;
-    private T data;
-
-    public Child() {
-    }
-
-    public Child(String kind, T data) {
-        this.kind = kind;
-        this.data = data;
-    }
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "Child{" +
-                "kind='" + kind + '\'' +
-                ", data=" + data +
-                '}';
+    public RedditResponse(String kind, Data<Child<Reddit>> data) {
+        super(kind, data);
     }
 }

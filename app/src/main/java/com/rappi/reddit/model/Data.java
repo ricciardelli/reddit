@@ -24,17 +24,17 @@ import java.util.List;
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Data {
+public class Data<T> {
 
     private String modhash;
-    private List<Child> children;
+    private List<T> children;
     private String after;
     private String before;
 
     public Data() {
     }
 
-    public Data(String modhash, List<Child> children, String after, String before) {
+    public Data(String modhash, List<T> children, String after, String before) {
         this.modhash = modhash;
         this.children = children;
         this.after = after;
@@ -49,11 +49,11 @@ public class Data {
         this.modhash = modhash;
     }
 
-    public List<Child> getChildren() {
+    public List<T> getChildren() {
         return children;
     }
 
-    public void setChildren(List<Child> children) {
+    public void setChildren(List<T> children) {
         this.children = children;
     }
 

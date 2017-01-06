@@ -30,7 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.rappi.reddit.R;
-import com.rappi.reddit.model.DefaultResponse;
+import com.rappi.reddit.model.CategoryResponse;
 import com.rappi.reddit.service.Service;
 
 import retrofit2.Call;
@@ -38,7 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends ParentActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Callback<DefaultResponse> {
+        implements NavigationView.OnNavigationItemSelectedListener, Callback<CategoryResponse> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +126,7 @@ public class MainActivity extends ParentActivity
     }
 
     @Override
-    public void onResponse(Call<DefaultResponse> call, Response<DefaultResponse> response) {
+    public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
         if (response.isSuccessful()) {
             Log.d(LOG_TAG, "Response :: " + response.body());
         } else {
@@ -135,7 +135,7 @@ public class MainActivity extends ParentActivity
     }
 
     @Override
-    public void onFailure(Call<DefaultResponse> call, Throwable t) {
+    public void onFailure(Call<CategoryResponse> call, Throwable t) {
         Log.e(LOG_TAG, t.getMessage(), t);
     }
 }

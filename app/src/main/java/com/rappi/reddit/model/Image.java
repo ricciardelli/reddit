@@ -17,45 +17,56 @@
 package com.rappi.reddit.model;
 
 /**
- * Base class used to define the default response.
+ * Base class for resolution and source data.
  *
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public abstract class DefaultResponse<T> {
+public class Image {
 
-    private String kind;
-    private T data;
+    private String url;
+    private int width;
+    private int height;
 
-    public DefaultResponse() {
+    public Image() {
     }
 
-    public DefaultResponse(String kind, T data) {
-        this.kind = kind;
-        this.data = data;
+    public Image(String url, int width, int height) {
+        this.url = url;
+        this.width = width;
+        this.height = height;
     }
 
-    public String getKind() {
-        return kind;
+    public String getUrl() {
+        return url;
     }
 
-    public void setKind(String kind) {
-        this.kind = kind;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
-    public T getData() {
-        return data;
+    public int getWidth() {
+        return width;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     @Override
     public String toString() {
-        return "DefaultResponse{" +
-                "kind='" + kind + '\'' +
-                ", data=" + data +
+        return "Image{" +
+                "url='" + url + '\'' +
+                ", width=" + width +
+                ", height=" + height +
                 '}';
     }
 }

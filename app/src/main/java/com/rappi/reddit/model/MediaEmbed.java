@@ -14,27 +14,10 @@
  * limitations under the License.
  */
 
-package com.rappi.reddit.service;
-
-import com.rappi.reddit.model.CategoryResponse;
-import com.rappi.reddit.model.RedditResponse;
-
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
+package com.rappi.reddit.model;
 
 /**
- * Category service interface.
- *
- * @author Richard Ricciardelli
- * @version 1.0
+ * Base class for secure media embed.
  */
-public interface RedditService {
-
-    @GET("reddits.json")
-    Call<CategoryResponse> categories();
-
-    @GET("{url}.json")
-    Call<RedditResponse> reddit(@Path("url") String url);
-
+public class MediaEmbed {
 }
