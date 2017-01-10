@@ -8,4 +8,8 @@
 
     <string name="serious_tag">SERIOUS</string>
     <string name="created_at">Submitted %1$s by %2$s</string>
+
+    <!-- Error messages -->
+    <string name="service_error">Could not connect to service. Try again later</string>
+    <string name="action_try_again">Try again</string>
 </resources>

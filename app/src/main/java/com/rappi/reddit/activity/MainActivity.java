@@ -48,7 +48,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends ParentActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Callback<CategoryResponse>, SwipeRefreshLayout.OnRefreshListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Callback<CategoryResponse>,
+        SwipeRefreshLayout.OnRefreshListener, ActivityBehaviour {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -82,7 +83,7 @@ public class MainActivity extends ParentActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Service.getInstance().getService().categories().enqueue(this);
+        callService();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.categories);
         mProgressBar = (ProgressBar) findViewById(R.id.activity_main_progress_bar);
@@ -156,13 +157,37 @@ public class MainActivity extends ParentActivity
     }
 
     @Override
+    public void callService() {
+        Service.getInstance().getService().categories().enqueue(this);
+    }
+
+    @Override
+    public void showError() {
+        mProgressBar.setVisibility(View.GONE);
+        Snackbar.make(mSwipeRefreshLayout, R.string.service_error, Snackbar.LENGTH_INDEFINITE).
+                setAction(R.string.action_try_again, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mProgressBar.setVisibility(View.VISIBLE);
+                        callService();
+                    }
+                }).show();
+    }
+
+    @Override
+    public void cancelRefreshing() {
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
     public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+
+        cancelRefreshing();
+
         if (response.isSuccessful()) {
             Log.d(LOG_TAG, "Response :: " + response.body());
-
-            if (mSwipeRefreshLayout.isRefreshing()) {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
 
             List<Category> categories = new ArrayList<>();
 
@@ -178,17 +203,19 @@ public class MainActivity extends ParentActivity
             mRecyclerView.setVisibility(View.VISIBLE);
             mProgressBar.setVisibility(View.GONE);
         } else {
+            showError();
             Log.e(LOG_TAG, "Response failed");
         }
     }
 
     @Override
     public void onFailure(Call<CategoryResponse> call, Throwable t) {
+        showError();
         Log.e(LOG_TAG, t.getMessage(), t);
     }
 
     @Override
     public void onRefresh() {
-        Service.getInstance().getService().categories().enqueue(this);
+        callService();
     }
 }

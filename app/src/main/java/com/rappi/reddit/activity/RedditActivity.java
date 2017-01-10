@@ -17,6 +17,7 @@
 package com.rappi.reddit.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -84,12 +85,11 @@ public class RedditActivity extends ParentActivity implements Callback<RedditRes
 
     @Override
     public void onResponse(Call<RedditResponse> call, Response<RedditResponse> response) {
+
+        cancelRefreshing();
+
         if (response.isSuccessful()) {
             Log.d(LOG_TAG, "Response :: " + response.body());
-
-            if (mSwipeRefreshLayout.isRefreshing()) {
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
 
             List<Reddit> reddits = new ArrayList<>();
 
@@ -105,18 +105,43 @@ public class RedditActivity extends ParentActivity implements Callback<RedditRes
             mRecyclerView.setVisibility(View.VISIBLE);
             mProgressBar.setVisibility(View.GONE);
         } else {
+            showError();
             Log.e(LOG_TAG, "Response failed");
-            // TODO Snack bar!
         }
     }
 
     @Override
     public void onFailure(Call<RedditResponse> call, Throwable t) {
+        showError();
         Log.e(LOG_TAG, t.getMessage(), t);
     }
 
     @Override
     public void onRefresh() {
         callService();
+    }
+
+    /**
+     * If refresh animation is currently being shown then it is dismissed.
+     */
+    private void cancelRefreshing() {
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    /**
+     * Shows error message.
+     */
+    private void showError() {
+        mProgressBar.setVisibility(View.GONE);
+        Snackbar.make(mSwipeRefreshLayout, R.string.service_error, Snackbar.LENGTH_INDEFINITE).
+                setAction(R.string.action_try_again, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mProgressBar.setVisibility(View.VISIBLE);
+                        callService();
+                    }
+                }).show();
     }
 }
