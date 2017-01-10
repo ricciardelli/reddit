@@ -17,10 +17,13 @@
 package com.rappi.reddit.activity;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.rappi.reddit.R;
 import com.rappi.reddit.adapter.RedditAdapter;
@@ -37,25 +40,27 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RedditActivity extends ParentActivity implements Callback<RedditResponse> {
+public class RedditActivity extends ParentActivity implements Callback<RedditResponse>, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private DividerItemDecoration mDividerItemDecoration;
     private RedditAdapter mRedditAdapter;
 
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reddit);
 
-        String url = getIntent().getStringExtra(Constants.CATEGORY_URL);
-
-        if (url != null) {
-            Service.getInstance().getService().reddit(url).enqueue(this);
-        }
+        callService();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.reddits);
+        mProgressBar = (ProgressBar) findViewById(R.id.activity_reddit_progress_bar);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_reddit_swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
@@ -66,10 +71,25 @@ public class RedditActivity extends ParentActivity implements Callback<RedditRes
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
     }
 
+    /**
+     * Call service to retrieve reddits based on category URL.
+     */
+    private void callService() {
+        String url = getIntent().getStringExtra(Constants.CATEGORY_URL);
+
+        if (url != null) {
+            Service.getInstance().getService().reddit(url).enqueue(this);
+        }
+    }
+
     @Override
     public void onResponse(Call<RedditResponse> call, Response<RedditResponse> response) {
         if (response.isSuccessful()) {
             Log.d(LOG_TAG, "Response :: " + response.body());
+
+            if (mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
 
             List<Reddit> reddits = new ArrayList<>();
 
@@ -79,6 +99,11 @@ public class RedditActivity extends ParentActivity implements Callback<RedditRes
 
             mRedditAdapter = new RedditAdapter(reddits, this);
             mRecyclerView.setAdapter(mRedditAdapter);
+
+            mRedditAdapter.notifyDataSetChanged();
+
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
         } else {
             Log.e(LOG_TAG, "Response failed");
             // TODO Snack bar!
@@ -88,5 +113,10 @@ public class RedditActivity extends ParentActivity implements Callback<RedditRes
     @Override
     public void onFailure(Call<RedditResponse> call, Throwable t) {
         Log.e(LOG_TAG, t.getMessage(), t);
+    }
+
+    @Override
+    public void onRefresh() {
+        callService();
     }
 }
