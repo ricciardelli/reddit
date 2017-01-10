@@ -39,6 +39,7 @@ import com.rappi.reddit.model.Category;
 import com.rappi.reddit.model.CategoryResponse;
 import com.rappi.reddit.model.Child;
 import com.rappi.reddit.service.Service;
+import com.rappi.reddit.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,8 +84,6 @@ public class MainActivity extends ParentActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        callService();
-
         mRecyclerView = (RecyclerView) findViewById(R.id.categories);
         mProgressBar = (ProgressBar) findViewById(R.id.activity_main_progress_bar);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
@@ -97,6 +96,14 @@ public class MainActivity extends ParentActivity
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        if (getIntent().getSerializableExtra(Constants.CATEGORIES_KEY) != null) {
+            CategoryResponse response = (CategoryResponse) getIntent().getSerializableExtra(Constants.CATEGORIES_KEY);
+            setData(response.getData().getChildren());
+        } else {
+            callService();
+        }
+
     }
 
     @Override
@@ -181,6 +188,27 @@ public class MainActivity extends ParentActivity
         }
     }
 
+    /**
+     * Shows response data on recycler view.
+     *
+     * @param children Categories
+     */
+    private void setData(List<Child<Category>> children) {
+        List<Category> categories = new ArrayList<>();
+
+        for (Child<Category> category : children) {
+            categories.add(category.getData());
+        }
+
+        mCategoryAdapter = new CategoryAdapter(categories, this);
+        mRecyclerView.setAdapter(mCategoryAdapter);
+
+        mCategoryAdapter.notifyDataSetChanged();
+
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
+    }
+
     @Override
     public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
 
@@ -189,19 +217,7 @@ public class MainActivity extends ParentActivity
         if (response.isSuccessful()) {
             Log.d(LOG_TAG, "Response :: " + response.body());
 
-            List<Category> categories = new ArrayList<>();
-
-            for (Child<Category> category : response.body().getData().getChildren()) {
-                categories.add(category.getData());
-            }
-
-            mCategoryAdapter = new CategoryAdapter(categories, this);
-            mRecyclerView.setAdapter(mCategoryAdapter);
-
-            mCategoryAdapter.notifyDataSetChanged();
-
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mProgressBar.setVisibility(View.GONE);
+            setData(response.body().getData().getChildren());
         } else {
             showError();
             Log.e(LOG_TAG, "Response failed");

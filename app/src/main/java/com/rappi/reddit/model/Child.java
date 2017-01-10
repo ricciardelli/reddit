@@ -16,13 +16,15 @@
 
 package com.rappi.reddit.model;
 
+import java.io.Serializable;
+
 /**
  * Base class used to define children on response.
  *
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Child<T> {
+public class Child<T> implements Serializable {
 
     private String kind;
     private T data;

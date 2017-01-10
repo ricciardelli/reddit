@@ -18,8 +18,18 @@ package com.rappi.reddit.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.rappi.reddit.model.CategoryResponse;
+import com.rappi.reddit.service.Service;
+import com.rappi.reddit.util.Constants;
+
+import java.io.Serializable;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Shows splash screen.
@@ -27,20 +37,25 @@ import android.support.annotation.Nullable;
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class SplashActivity extends ParentActivity {
-
-    private final int SPLASH_DISPLAY_LENGTH = 1000;
+public class SplashActivity extends ParentActivity implements Callback<CategoryResponse> {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Service.getInstance().getService().categories().enqueue(this);
+    }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                showMainActivity();
-            }
-        }, SPLASH_DISPLAY_LENGTH);
+    /**
+     * Starts main activity once the service has sent a succesful response.
+     *
+     * @param key  name
+     * @param data children
+     */
+    private void showMainActivity(String key, Serializable data) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(key, data);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -51,4 +66,19 @@ public class SplashActivity extends ParentActivity {
         finish();
     }
 
+
+    @Override
+    public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
+        if (response.isSuccessful()) {
+            showMainActivity(Constants.CATEGORIES_KEY, response.body());
+        } else {
+            showMainActivity();
+        }
+    }
+
+    @Override
+    public void onFailure(Call<CategoryResponse> call, Throwable t) {
+        Log.e(LOG_TAG, t.getMessage(), t);
+        showMainActivity();
+    }
 }

@@ -29,6 +29,8 @@ public interface Constants {
      */
     String CATEGORY_URL = "url";
 
+    String CATEGORIES_KEY = "categories";
+
     /**
      * Serious tag identifier.
      */
