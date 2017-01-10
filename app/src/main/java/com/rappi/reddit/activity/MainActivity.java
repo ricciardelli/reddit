@@ -23,6 +23,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -30,15 +32,25 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.rappi.reddit.R;
-import com.rappi.reddit.model.DefaultResponse;
+import com.rappi.reddit.adapter.CategoryAdapter;
+import com.rappi.reddit.model.Category;
+import com.rappi.reddit.model.CategoryResponse;
+import com.rappi.reddit.model.Child;
 import com.rappi.reddit.service.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends ParentActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Callback<DefaultResponse> {
+        implements NavigationView.OnNavigationItemSelectedListener, Callback<CategoryResponse> {
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private CategoryAdapter mCategoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +78,16 @@ public class MainActivity extends ParentActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Service.getInstance().getService().categories().enqueue(this);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.categories);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        mRecyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
     @Override
@@ -126,16 +148,25 @@ public class MainActivity extends ParentActivity
     }
 
     @Override
-    public void onResponse(Call<DefaultResponse> call, Response<DefaultResponse> response) {
+    public void onResponse(Call<CategoryResponse> call, Response<CategoryResponse> response) {
         if (response.isSuccessful()) {
             Log.d(LOG_TAG, "Response :: " + response.body());
+
+            List<Category> categories = new ArrayList<>();
+
+            for (Child<Category> category : response.body().getData().getChildren()) {
+                categories.add(category.getData());
+            }
+
+            mCategoryAdapter = new CategoryAdapter(categories, this);
+            mRecyclerView.setAdapter(mCategoryAdapter);
         } else {
             Log.e(LOG_TAG, "Response failed");
         }
     }
 
     @Override
-    public void onFailure(Call<DefaultResponse> call, Throwable t) {
+    public void onFailure(Call<CategoryResponse> call, Throwable t) {
         Log.e(LOG_TAG, t.getMessage(), t);
     }
 }

@@ -17,45 +17,14 @@
 package com.rappi.reddit.model;
 
 /**
- * Base class used to define children on response.
+ * Custom response which change data type to handle {@link Category} data.
  *
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Child<T> {
+public class CategoryResponse extends DefaultResponse<Data<Child<Category>>> {
 
-    private String kind;
-    private T data;
-
-    public Child() {
-    }
-
-    public Child(String kind, T data) {
-        this.kind = kind;
-        this.data = data;
-    }
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "Child{" +
-                "kind='" + kind + '\'' +
-                ", data=" + data +
-                '}';
+    public CategoryResponse(String kind, Data<Child<Category>> data) {
+        super(kind, data);
     }
 }
