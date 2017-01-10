@@ -34,6 +34,7 @@ public class Reddit {
     private String author;
     private String name;
     private int score;
+    private Preview preview;
     private String approvedBy;
     private String thumbnail;
     private String subredditId;
@@ -61,7 +62,7 @@ public class Reddit {
     public Reddit() {
     }
 
-    public Reddit(String domain, String subreddit, String selftext, String likes, String id, String author, String name, int score, String approvedBy, String thumbnail, String subredditId, String linkFlairCssClass, int downs, boolean isSelf, boolean hideScore, boolean spoiler, String permalink, boolean locked, boolean stickied, Date created, String url, String authorFlairText, boolean quarantine, String title, Date createdUtc, String linkFlairText, String distinguished, int numComments, boolean visited, String numReports, int ups) {
+    public Reddit(String domain, String subreddit, String selftext, String likes, String id, String author, String name, int score, Preview preview, String approvedBy, String thumbnail, String subredditId, String linkFlairCssClass, int downs, boolean isSelf, boolean hideScore, boolean spoiler, String permalink, boolean locked, boolean stickied, Date created, String url, String authorFlairText, boolean quarantine, String title, Date createdUtc, String linkFlairText, String distinguished, int numComments, boolean visited, String numReports, int ups) {
         this.domain = domain;
         this.subreddit = subreddit;
         this.selftext = selftext;
@@ -70,6 +71,7 @@ public class Reddit {
         this.author = author;
         this.name = name;
         this.score = score;
+        this.preview = preview;
         this.approvedBy = approvedBy;
         this.thumbnail = thumbnail;
         this.subredditId = subredditId;
@@ -157,6 +159,14 @@ public class Reddit {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public Preview getPreview() {
+        return preview;
+    }
+
+    public void setPreview(Preview preview) {
+        this.preview = preview;
     }
 
     public String getApprovedBy() {
@@ -354,6 +364,7 @@ public class Reddit {
                 ", author='" + author + '\'' +
                 ", name='" + name + '\'' +
                 ", score=" + score +
+                ", preview=" + preview +
                 ", approvedBy='" + approvedBy + '\'' +
                 ", thumbnail='" + thumbnail + '\'' +
                 ", subredditId='" + subredditId + '\'' +
