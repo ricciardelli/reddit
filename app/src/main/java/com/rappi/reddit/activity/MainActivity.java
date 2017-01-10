@@ -22,6 +22,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.rappi.reddit.R;
 import com.rappi.reddit.adapter.CategoryAdapter;
@@ -46,11 +48,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends ParentActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Callback<CategoryResponse> {
+        implements NavigationView.OnNavigationItemSelectedListener, Callback<CategoryResponse>, SwipeRefreshLayout.OnRefreshListener {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
     private CategoryAdapter mCategoryAdapter;
+
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +85,9 @@ public class MainActivity extends ParentActivity
         Service.getInstance().getService().categories().enqueue(this);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.categories);
+        mProgressBar = (ProgressBar) findViewById(R.id.activity_main_progress_bar);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -152,6 +160,10 @@ public class MainActivity extends ParentActivity
         if (response.isSuccessful()) {
             Log.d(LOG_TAG, "Response :: " + response.body());
 
+            if (mSwipeRefreshLayout.isRefreshing()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
             List<Category> categories = new ArrayList<>();
 
             for (Child<Category> category : response.body().getData().getChildren()) {
@@ -160,6 +172,11 @@ public class MainActivity extends ParentActivity
 
             mCategoryAdapter = new CategoryAdapter(categories, this);
             mRecyclerView.setAdapter(mCategoryAdapter);
+
+            mCategoryAdapter.notifyDataSetChanged();
+
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
         } else {
             Log.e(LOG_TAG, "Response failed");
         }
@@ -168,5 +185,10 @@ public class MainActivity extends ParentActivity
     @Override
     public void onFailure(Call<CategoryResponse> call, Throwable t) {
         Log.e(LOG_TAG, t.getMessage(), t);
+    }
+
+    @Override
+    public void onRefresh() {
+        Service.getInstance().getService().categories().enqueue(this);
     }
 }
