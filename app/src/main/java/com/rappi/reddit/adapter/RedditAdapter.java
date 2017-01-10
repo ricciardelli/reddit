@@ -18,17 +18,21 @@ package com.rappi.reddit.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rappi.reddit.R;
+import com.rappi.reddit.model.ImageWrapper;
 import com.rappi.reddit.model.Reddit;
 import com.rappi.reddit.util.Constants;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -56,6 +60,7 @@ public class RedditAdapter extends RecyclerView.Adapter<RedditAdapter.ViewHolder
         public TextView comments;
         public TextView ups;
         public TextView serious;
+        public ImageView preview;
 
         public ViewHolder(View view) {
             super(view);
@@ -65,6 +70,7 @@ public class RedditAdapter extends RecyclerView.Adapter<RedditAdapter.ViewHolder
             comments = (TextView) view.findViewById(R.id.comments);
             ups = (TextView) view.findViewById(R.id.ups);
             serious = (TextView) view.findViewById(R.id.serious);
+            preview = (ImageView) view.findViewById(R.id.preview);
         }
     }
 
@@ -107,6 +113,15 @@ public class RedditAdapter extends RecyclerView.Adapter<RedditAdapter.ViewHolder
         if (reddit.getLinkFlairCssClass() != null) {
             if (reddit.getLinkFlairCssClass().equalsIgnoreCase(Constants.SERIOUS_TAG)) {
                 holder.serious.setVisibility(View.VISIBLE);
+            }
+        }
+
+        if (reddit.getPreview() != null) {
+            for (ImageWrapper imageWrapper : reddit.getPreview().getImages()) {
+                holder.preview.setVisibility(View.VISIBLE);
+                holder.title.setBackgroundResource(R.drawable.gradient);
+                holder.title.setTextColor(Color.WHITE);
+                Picasso.with(context).load(imageWrapper.getSource().getUrl()).into(holder.preview);
             }
         }
 
