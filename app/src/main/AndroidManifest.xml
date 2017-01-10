@@ -30,6 +30,9 @@
         <activity
             android:name=".activity.RedditActivity"
             android:parentActivityName=".activity.MainActivity" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b35864a656f5949c8003bd14797ce87f5f277852" />
     </application>
 
 </manifest>

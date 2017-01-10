@@ -17,6 +17,8 @@
 package com.rappi.reddit.application;
 
 import android.app.Application;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Base class for the application.
@@ -29,5 +31,6 @@ public class RedditApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
     }
 }
