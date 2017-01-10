@@ -17,15 +17,18 @@
 package com.rappi.reddit.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.rappi.reddit.R;
+import com.rappi.reddit.activity.RedditActivity;
 import com.rappi.reddit.model.Category;
+import com.rappi.reddit.util.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -91,9 +94,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
         holder.subscribers.setText(subscribers);
 
-        Log.d("BLAH", category.getKeyColor());
-
-        if (!category.getIconImg().isEmpty()) {
+        if (category.getIconImg() != null && !category.getIconImg().isEmpty()) {
             Picasso.with(context).load(category.getIconImg()).into(holder.icon);
         }
 
@@ -103,6 +104,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 //            CardView cardView = (CardView) holder.itemView.findViewById(R.id.card_view);
 //            cardView.setCardBackgroundColor(Color.parseColor(category.getKeyColor()));
         }
+
+        final String url = category.getUrl().substring(1, category.getUrl().length() - 1);
+
+        CardView cardView = (CardView) holder.itemView.findViewById(R.id.card_view);
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, RedditActivity.class);
+                intent.putExtra(Constants.CATEGORY_URL, url);
+                context.startActivity(intent);
+            }
+        });
 
     }
 

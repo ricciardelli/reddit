@@ -14,10 +14,23 @@
  * limitations under the License.
  */
 
-package com.rappi.reddit.model;
+package com.rappi.reddit.util;
 
 /**
- * Base class for secure media embed.
+ * Interface with application constants.
+ *
+ * @author Richard Ricciardelli
+ * @version 1.0
  */
-public class MediaEmbed {
+public interface Constants {
+
+    /**
+     * URL of the category.
+     */
+    String CATEGORY_URL = "url";
+
+    /**
+     * Serious tag identifier.
+     */
+    String SERIOUS_TAG = "serious";
 }
