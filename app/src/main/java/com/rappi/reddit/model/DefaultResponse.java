@@ -16,13 +16,15 @@
 
 package com.rappi.reddit.model;
 
+import java.io.Serializable;
+
 /**
  * Base class used to define the default response.
  *
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public abstract class DefaultResponse<T> {
+public abstract class DefaultResponse<T> implements Serializable {
 
     private String kind;
     private T data;

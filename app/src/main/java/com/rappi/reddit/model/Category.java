@@ -16,6 +16,7 @@
 
 package com.rappi.reddit.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import java.util.List;
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Category {
+public class Category implements Serializable {
 
     private String bannerImg;
     private String id;

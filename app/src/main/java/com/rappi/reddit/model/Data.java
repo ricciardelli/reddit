@@ -16,6 +16,7 @@
 
 package com.rappi.reddit.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ import java.util.List;
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Data<T> {
+public class Data<T> implements Serializable {
 
     private String modhash;
     private List<T> children;
