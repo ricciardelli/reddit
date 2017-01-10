@@ -18,6 +18,7 @@ package com.rappi.reddit.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -95,14 +96,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         holder.subscribers.setText(subscribers);
 
         if (category.getIconImg() != null && !category.getIconImg().isEmpty()) {
-            Picasso.with(context).load(category.getIconImg()).into(holder.icon);
+            Picasso.with(context).load(category.getIconImg()).noFade().into(holder.icon);
         }
 
-        // TODO Do something with the color.
         if (!category.getKeyColor().isEmpty()) {
-//            holder.icon.setBorderColor(Color.parseColor(category.getKeyColor()));
-//            CardView cardView = (CardView) holder.itemView.findViewById(R.id.card_view);
-//            cardView.setCardBackgroundColor(Color.parseColor(category.getKeyColor()));
+            holder.icon.setBorderColor(Color.parseColor(category.getKeyColor()));
         }
 
         final String url = category.getUrl().substring(1, category.getUrl().length() - 1);
