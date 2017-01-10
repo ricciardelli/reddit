@@ -17,4 +17,12 @@
     <dimen name="icon_height">64dp</dimen>
     <dimen name="icon_width">@dimen/icon_height</dimen>
     <dimen name="icon_border_width">@dimen/icon_height</dimen>
+
+    <dimen name="drawable_padding">2dp</dimen>
+
+    <dimen name="serious_padding">8dp</dimen>
+    <dimen name="serious_margin">16dp</dimen>
+
+    <dimen name="domain_margin">8dp</dimen>
+    <dimen name="thumbnail_margin">16dp</dimen>
 </resources>
