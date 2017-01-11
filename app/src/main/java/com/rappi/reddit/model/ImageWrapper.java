@@ -16,7 +16,8 @@
 
 package com.rappi.reddit.model;
 
-import java.util.List;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
 /**
  * Base class for image wrapper.
@@ -24,17 +25,17 @@ import java.util.List;
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class ImageWrapper {
+public class ImageWrapper extends RealmObject {
 
     private String id;
     private Image source;
-    private List<Image> resolutions;
+    private RealmList<Image> resolutions;
     //private List<Image> variants;
 
     public ImageWrapper() {
     }
 
-    public ImageWrapper(String id, Image source, List<Image> resolutions) {
+    public ImageWrapper(String id, Image source, RealmList<Image> resolutions) {
         this.id = id;
         this.source = source;
         this.resolutions = resolutions;
@@ -56,11 +57,11 @@ public class ImageWrapper {
         this.source = source;
     }
 
-    public List<Image> getResolutions() {
+    public RealmList<Image> getResolutions() {
         return resolutions;
     }
 
-    public void setResolutions(List<Image> resolutions) {
+    public void setResolutions(RealmList<Image> resolutions) {
         this.resolutions = resolutions;
     }
 
