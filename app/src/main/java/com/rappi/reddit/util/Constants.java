@@ -29,6 +29,9 @@ public interface Constants {
      */
     String CATEGORY_URL = "url";
 
+    /**
+     * Categories children identifier.
+     */
     String CATEGORIES_KEY = "categories";
 
     /**
