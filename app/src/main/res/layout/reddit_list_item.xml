@@ -24,34 +24,29 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/frame"
+    <ImageView
+        android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true">
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:visibility="gone" />
 
-        <ImageView
-            android:id="@+id/preview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:cropToPadding="true"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/title"
-            style="@style/TextAppearance.AppCompat.Title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:padding="@dimen/title_padding" />
-    </FrameLayout>
+    <TextView
+        android:id="@+id/title"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/preview"
+        android:paddingLeft="@dimen/title_padding"
+        android:paddingRight="@dimen/title_padding"
+        android:paddingTop="@dimen/title_padding" />
 
     <TextView
         android:id="@+id/created_at"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/frame"
+        android:layout_below="@id/title"
         android:padding="@dimen/title_padding" />
 
     <TextView

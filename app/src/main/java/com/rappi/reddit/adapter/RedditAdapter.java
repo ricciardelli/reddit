@@ -18,7 +18,6 @@ package com.rappi.reddit.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -119,8 +118,6 @@ public class RedditAdapter extends RecyclerView.Adapter<RedditAdapter.ViewHolder
         if (reddit.getPreview() != null) {
             for (ImageWrapper imageWrapper : reddit.getPreview().getImages()) {
                 holder.preview.setVisibility(View.VISIBLE);
-                holder.title.setBackgroundResource(R.drawable.gradient);
-                holder.title.setTextColor(Color.WHITE);
                 Picasso.with(context).load(imageWrapper.getSource().getUrl()).into(holder.preview);
             }
         }
