@@ -79,6 +79,7 @@ public class RedditActivity extends ParentActivity implements Callback<RedditRes
         String url = getIntent().getStringExtra(Constants.CATEGORY_URL);
 
         if (url != null) {
+            setTitle(url);
             Service.getInstance().getService().reddit(url).enqueue(this);
         }
     }

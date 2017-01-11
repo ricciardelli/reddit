@@ -36,6 +36,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Base class which provides access to reddits data set.
  *
@@ -54,23 +57,24 @@ public class RedditAdapter extends RecyclerView.Adapter<RedditAdapter.ViewHolder
      * @version 1.0
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
-        public TextView createdAt;
-        public TextView domain;
-        public TextView comments;
-        public TextView ups;
-        public TextView serious;
-        public ImageView preview;
+        @BindView(R.id.title)
+        TextView title;
+        @BindView(R.id.created_at)
+        TextView createdAt;
+        @BindView(R.id.domain)
+        TextView domain;
+        @BindView(R.id.comments)
+        TextView comments;
+        @BindView(R.id.ups)
+        TextView ups;
+        @BindView(R.id.serious)
+        TextView serious;
+        @BindView(R.id.preview)
+        ImageView preview;
 
         public ViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
-            createdAt = (TextView) view.findViewById(R.id.created_at);
-            domain = (TextView) view.findViewById(R.id.domain);
-            comments = (TextView) view.findViewById(R.id.comments);
-            ups = (TextView) view.findViewById(R.id.ups);
-            serious = (TextView) view.findViewById(R.id.serious);
-            preview = (ImageView) view.findViewById(R.id.preview);
+            ButterKnife.bind(this, view);
         }
     }
 
@@ -91,10 +95,6 @@ public class RedditAdapter extends RecyclerView.Adapter<RedditAdapter.ViewHolder
         Reddit reddit = reddits.get(position);
 
         holder.title.setText(reddit.getTitle());
-
-        /*holder.createdAt.setText(DateUtils.getRelativeTimeSpanString(
-                reddit.getCreated().getTime(), System.currentTimeMillis(),
-                DateUtils.SECOND_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));*/
 
         String createdAt = context.getString(
                 R.string.created_at,

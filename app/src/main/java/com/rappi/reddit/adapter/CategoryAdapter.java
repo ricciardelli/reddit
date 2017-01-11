@@ -34,6 +34,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -55,17 +57,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
      * @version 1.0
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
-        public TextView subtitle;
-        public TextView subscribers;
-        public CircleImageView icon;
+        @BindView(R.id.title)
+        TextView title;
+        @BindView(R.id.subtitle)
+        TextView subtitle;
+        @BindView(R.id.subscribers)
+        TextView subscribers;
+        @BindView(R.id.icon)
+        CircleImageView icon;
 
         public ViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.title);
-            subtitle = (TextView) view.findViewById(R.id.subtitle);
-            subscribers = (TextView) view.findViewById(R.id.subscribers);
-            icon = (CircleImageView) view.findViewById(R.id.icon);
+            ButterKnife.bind(this, view);
         }
     }
 
