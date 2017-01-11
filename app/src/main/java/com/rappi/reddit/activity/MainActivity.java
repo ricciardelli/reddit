@@ -44,6 +44,8 @@ import com.rappi.reddit.util.Constants;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,17 +54,25 @@ public class MainActivity extends ParentActivity
         implements NavigationView.OnNavigationItemSelectedListener, Callback<CategoryResponse>,
         SwipeRefreshLayout.OnRefreshListener, ActivityBehaviour {
 
-    private RecyclerView mRecyclerView;
+    @BindView(R.id.categories)
+    RecyclerView mRecyclerView;
+
+    @BindView(R.id.activity_main_swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
+    @BindView(R.id.activity_main_progress_bar)
+    ProgressBar mProgressBar;
+
     private RecyclerView.LayoutManager mLayoutManager;
     private CategoryAdapter mCategoryAdapter;
-
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -84,9 +94,6 @@ public class MainActivity extends ParentActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.categories);
-        mProgressBar = (ProgressBar) findViewById(R.id.activity_main_progress_bar);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         // use this setting to improve performance if you know that changes
