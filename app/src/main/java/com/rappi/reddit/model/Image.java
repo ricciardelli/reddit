@@ -16,13 +16,15 @@
 
 package com.rappi.reddit.model;
 
+import io.realm.RealmObject;
+
 /**
  * Base class for resolution and source data.
  *
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Image {
+public class Image extends RealmObject {
 
     private String url;
     private int width;

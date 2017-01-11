@@ -16,7 +16,8 @@
 
 package com.rappi.reddit.model;
 
-import java.util.List;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
 /**
  * Base class for preview of images.
@@ -24,22 +25,22 @@ import java.util.List;
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Preview {
+public class Preview extends RealmObject {
 
-    private List<ImageWrapper> images;
+    private RealmList<ImageWrapper> images;
 
     public Preview() {
     }
 
-    public Preview(List<ImageWrapper> images) {
+    public Preview(RealmList<ImageWrapper> images) {
         this.images = images;
     }
 
-    public List<ImageWrapper> getImages() {
+    public RealmList<ImageWrapper> getImages() {
         return images;
     }
 
-    public void setImages(List<ImageWrapper> images) {
+    public void setImages(RealmList<ImageWrapper> images) {
         this.images = images;
     }
 

@@ -186,6 +186,9 @@ public class MainActivity extends ParentActivity
                         callService();
                     }
                 }).show();
+
+        // Sets adapter with offline data.
+        setAdapter(load(Category.class));
     }
 
     @Override
@@ -195,25 +198,28 @@ public class MainActivity extends ParentActivity
         }
     }
 
-    /**
-     * Shows response data on recycler view.
-     *
-     * @param children Categories
-     */
-    private void setData(List<Child<Category>> children) {
-        List<Category> categories = new ArrayList<>();
-
-        for (Child<Category> category : children) {
-            categories.add(category.getData());
-        }
-
-        mCategoryAdapter = new CategoryAdapter(categories, this);
+    @Override
+    public void setAdapter(List items) {
+        mCategoryAdapter = new CategoryAdapter(items, this);
         mRecyclerView.setAdapter(mCategoryAdapter);
 
         mCategoryAdapter.notifyDataSetChanged();
 
         mRecyclerView.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setData(List children) {
+        List<Category> categories = new ArrayList<>();
+
+        for (Object category : children) {
+            categories.add(((Child<Category>) category).getData());
+        }
+
+        setAdapter(categories);
+
+        save(categories);
     }
 
     @Override
@@ -233,6 +239,7 @@ public class MainActivity extends ParentActivity
 
     @Override
     public void onFailure(Call<CategoryResponse> call, Throwable t) {
+        cancelRefreshing();
         showError();
         Log.e(LOG_TAG, t.getMessage(), t);
     }

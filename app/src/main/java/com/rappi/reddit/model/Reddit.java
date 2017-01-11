@@ -18,18 +18,22 @@ package com.rappi.reddit.model;
 
 import java.util.Date;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Base class for reddit data.
  *
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Reddit {
+public class Reddit extends RealmObject {
 
     private String domain;
     private String subreddit;
     private String selftext;
     private String likes;
+    @PrimaryKey
     private String id;
     private String author;
     private String name;

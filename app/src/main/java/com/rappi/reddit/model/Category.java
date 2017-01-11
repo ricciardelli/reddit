@@ -18,7 +18,9 @@ package com.rappi.reddit.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Base class for reddit categories data.
@@ -26,15 +28,15 @@ import java.util.List;
  * @author Richard Ricciardelli
  * @version 1.0
  */
-public class Category implements Serializable {
+public class Category extends RealmObject implements Serializable {
 
     private String bannerImg;
+    @PrimaryKey
     private String id;
     private String submitText;
     private String displayName;
     private String headerImg;
     private String title;
-    private List<Integer> iconSize;
     private String iconImg;
     private String headerTitle;
     private String description;
@@ -46,21 +48,19 @@ public class Category implements Serializable {
     private Date created;
     private String url;
     private Date createdUtc;
-    private List<Integer> bannerSize;
     private String publicDescription;
     private String subredditType;
 
     public Category() {
     }
 
-    public Category(String bannerImg, String id, String submitText, String displayName, String headerImg, String title, List<Integer> iconSize, String iconImg, String headerTitle, String description, long subscribers, String submitTextLabel, String lang, String keyColor, String name, Date created, String url, Date createdUtc, List<Integer> bannerSize, String publicDescription, String subredditType) {
+    public Category(String bannerImg, String id, String submitText, String displayName, String headerImg, String title, String iconImg, String headerTitle, String description, long subscribers, String submitTextLabel, String lang, String keyColor, String name, Date created, String url, Date createdUtc, String publicDescription, String subredditType) {
         this.bannerImg = bannerImg;
         this.id = id;
         this.submitText = submitText;
         this.displayName = displayName;
         this.headerImg = headerImg;
         this.title = title;
-        this.iconSize = iconSize;
         this.iconImg = iconImg;
         this.headerTitle = headerTitle;
         this.description = description;
@@ -72,7 +72,6 @@ public class Category implements Serializable {
         this.created = created;
         this.url = url;
         this.createdUtc = createdUtc;
-        this.bannerSize = bannerSize;
         this.publicDescription = publicDescription;
         this.subredditType = subredditType;
     }
@@ -123,14 +122,6 @@ public class Category implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public List<Integer> getIconSize() {
-        return iconSize;
-    }
-
-    public void setIconSize(List<Integer> iconSize) {
-        this.iconSize = iconSize;
     }
 
     public String getIconImg() {
@@ -221,14 +212,6 @@ public class Category implements Serializable {
         this.createdUtc = createdUtc;
     }
 
-    public List<Integer> getBannerSize() {
-        return bannerSize;
-    }
-
-    public void setBannerSize(List<Integer> bannerSize) {
-        this.bannerSize = bannerSize;
-    }
-
     public String getPublicDescription() {
         return publicDescription;
     }
@@ -254,7 +237,6 @@ public class Category implements Serializable {
                 ", displayName='" + displayName + '\'' +
                 ", headerImg='" + headerImg + '\'' +
                 ", title='" + title + '\'' +
-                ", iconSize=" + iconSize +
                 ", iconImg='" + iconImg + '\'' +
                 ", headerTitle='" + headerTitle + '\'' +
                 ", description='" + description + '\'' +
@@ -266,7 +248,6 @@ public class Category implements Serializable {
                 ", created=" + created +
                 ", url='" + url + '\'' +
                 ", createdUtc=" + createdUtc +
-                ", bannerSize=" + bannerSize +
                 ", publicDescription='" + publicDescription + '\'' +
                 ", subredditType='" + subredditType + '\'' +
                 '}';

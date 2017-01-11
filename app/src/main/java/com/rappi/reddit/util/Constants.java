@@ -29,10 +29,18 @@ public interface Constants {
      */
     String CATEGORY_URL = "url";
 
+    /**
+     * Categories children identifier.
+     */
     String CATEGORIES_KEY = "categories";
 
     /**
      * Serious tag identifier.
      */
     String SERIOUS_TAG = "serious";
+
+    /**
+     * Subreddit id key.
+     */
+    String SUBREDDIT_ID_KEY = "subredditId";
 }
