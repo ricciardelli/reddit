@@ -107,6 +107,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
 
         final String url = category.getUrl().substring(1, category.getUrl().length() - 1);
+        final String key = category.getName();
 
         CardView cardView = (CardView) holder.itemView.findViewById(R.id.card_view);
         cardView.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +115,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             public void onClick(View view) {
                 Intent intent = new Intent(context, RedditActivity.class);
                 intent.putExtra(Constants.CATEGORY_URL, url);
+                intent.putExtra(Constants.SUBREDDIT_ID_KEY, key);
                 context.startActivity(intent);
             }
         });

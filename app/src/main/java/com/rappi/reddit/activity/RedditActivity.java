@@ -41,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RedditActivity extends ParentActivity implements Callback<RedditResponse>, SwipeRefreshLayout.OnRefreshListener {
+public class RedditActivity extends ParentActivity implements Callback<RedditResponse>, SwipeRefreshLayout.OnRefreshListener, ActivityBehaviour {
 
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
@@ -72,16 +72,62 @@ public class RedditActivity extends ParentActivity implements Callback<RedditRes
         mRecyclerView.addItemDecoration(mDividerItemDecoration);
     }
 
-    /**
-     * Call service to retrieve reddits based on category URL.
-     */
-    private void callService() {
+
+    @Override
+    public void callService() {
         String url = getIntent().getStringExtra(Constants.CATEGORY_URL);
 
         if (url != null) {
             setTitle(url);
             Service.getInstance().getService().reddit(url).enqueue(this);
         }
+    }
+
+    @Override
+    public void showError() {
+        mProgressBar.setVisibility(View.GONE);
+        Snackbar.make(mSwipeRefreshLayout, R.string.service_error, Snackbar.LENGTH_INDEFINITE).
+                setAction(R.string.action_try_again, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mProgressBar.setVisibility(View.VISIBLE);
+                        callService();
+                    }
+                }).show();
+
+        // Sets adapter with offline data.
+        setAdapter(load(Reddit.class, Constants.SUBREDDIT_ID_KEY, getIntent().getStringExtra(Constants.SUBREDDIT_ID_KEY)));
+    }
+
+    @Override
+    public void cancelRefreshing() {
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void setAdapter(List items) {
+        mRedditAdapter = new RedditAdapter(items, this);
+        mRecyclerView.setAdapter(mRedditAdapter);
+
+        mRedditAdapter.notifyDataSetChanged();
+
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setData(List children) {
+        List<Reddit> reddits = new ArrayList<>();
+
+        for (Object reddit : children) {
+            reddits.add(((Child<Reddit>) reddit).getData());
+        }
+
+        setAdapter(reddits);
+
+        save(reddits);
     }
 
     @Override
@@ -92,19 +138,7 @@ public class RedditActivity extends ParentActivity implements Callback<RedditRes
         if (response.isSuccessful()) {
             Log.d(LOG_TAG, "Response :: " + response.body());
 
-            List<Reddit> reddits = new ArrayList<>();
-
-            for (Child<Reddit> reddit : response.body().getData().getChildren()) {
-                reddits.add(reddit.getData());
-            }
-
-            mRedditAdapter = new RedditAdapter(reddits, this);
-            mRecyclerView.setAdapter(mRedditAdapter);
-
-            mRedditAdapter.notifyDataSetChanged();
-
-            mRecyclerView.setVisibility(View.VISIBLE);
-            mProgressBar.setVisibility(View.GONE);
+            setData(response.body().getData().getChildren());
         } else {
             showError();
             Log.e(LOG_TAG, "Response failed");
@@ -113,6 +147,7 @@ public class RedditActivity extends ParentActivity implements Callback<RedditRes
 
     @Override
     public void onFailure(Call<RedditResponse> call, Throwable t) {
+        cancelRefreshing();
         showError();
         Log.e(LOG_TAG, t.getMessage(), t);
     }
@@ -122,27 +157,5 @@ public class RedditActivity extends ParentActivity implements Callback<RedditRes
         callService();
     }
 
-    /**
-     * If refresh animation is currently being shown then it is dismissed.
-     */
-    private void cancelRefreshing() {
-        if (mSwipeRefreshLayout.isRefreshing()) {
-            mSwipeRefreshLayout.setRefreshing(false);
-        }
-    }
 
-    /**
-     * Shows error message.
-     */
-    private void showError() {
-        mProgressBar.setVisibility(View.GONE);
-        Snackbar.make(mSwipeRefreshLayout, R.string.service_error, Snackbar.LENGTH_INDEFINITE).
-                setAction(R.string.action_try_again, new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mProgressBar.setVisibility(View.VISIBLE);
-                        callService();
-                    }
-                }).show();
-    }
 }

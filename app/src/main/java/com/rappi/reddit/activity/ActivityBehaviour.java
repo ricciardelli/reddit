@@ -16,6 +16,8 @@
 
 package com.rappi.reddit.activity;
 
+import java.util.List;
+
 /**
  * Base interface to define behaviours on activities lifecycle.
  *
@@ -38,4 +40,19 @@ public interface ActivityBehaviour {
      * Cancels refreshing animation when required.
      */
     void cancelRefreshing();
+
+    /**
+     * Lists items on proper recycler view adapter.
+     *
+     * @param items Categories, Reddits.
+     */
+    void setAdapter(List items);
+
+    /**
+     * Sets data on recycler view and into the database.
+     *
+     * @param children Categories or Reddits children.
+     */
+    void setData(List children);
+
 }

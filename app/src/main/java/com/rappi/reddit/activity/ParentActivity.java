@@ -57,6 +57,22 @@ public class ParentActivity extends AppCompatActivity {
         return mRealm.where(object).findAll();
     }
 
+    /**
+     * Finds items from the database specifying a column and a value to search.
+     *
+     * @param object Realm object class
+     * @param key    Column
+     * @param value  Search term
+     * @return Categories or Reddits filtered
+     */
+    protected List load(Class object, String key, String value) {
+        return mRealm.where(object)
+                .beginGroup()
+                .equalTo(key, value)
+                .endGroup()
+                .findAll();
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

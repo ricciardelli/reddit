@@ -38,4 +38,9 @@ public interface Constants {
      * Serious tag identifier.
      */
     String SERIOUS_TAG = "serious";
+
+    /**
+     * Subreddit id key.
+     */
+    String SUBREDDIT_ID_KEY = "subredditId";
 }
