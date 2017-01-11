@@ -14,9 +14,9 @@
     <dimen name="title_padding">16dp</dimen>
 
     <!-- Icon dimens. -->
-    <dimen name="icon_height">64dp</dimen>
+    <dimen name="icon_height">84dp</dimen>
     <dimen name="icon_width">@dimen/icon_height</dimen>
-    <dimen name="icon_border_width">@dimen/icon_height</dimen>
+    <dimen name="icon_border_width">2dp</dimen>
 
     <dimen name="drawable_padding">2dp</dimen>
 
