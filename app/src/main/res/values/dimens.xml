@@ -6,4 +6,23 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Card default dimens- -->
+    <dimen name="cardview_height">200dp</dimen>
+    <dimen name="cardview_corner_radius">6dp</dimen>
+
+    <dimen name="title_padding">16dp</dimen>
+
+    <!-- Icon dimens. -->
+    <dimen name="icon_height">84dp</dimen>
+    <dimen name="icon_width">@dimen/icon_height</dimen>
+    <dimen name="icon_border_width">2dp</dimen>
+
+    <dimen name="drawable_padding">2dp</dimen>
+
+    <dimen name="serious_padding">8dp</dimen>
+    <dimen name="serious_margin">16dp</dimen>
+
+    <dimen name="domain_margin">8dp</dimen>
+    <dimen name="thumbnail_margin">16dp</dimen>
 </resources>
